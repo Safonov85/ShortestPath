@@ -42,7 +42,7 @@ namespace ShortestPath
             distance[0] = 10000;
             int amount = 1;
 
-            while(amount <= placesPositionX.Length - 1)
+            while (amount <= placesPositionX.Length - 1)
             {
                 distance[amount] = Math.Sqrt(Math.Pow(placesPositionX[amount] - placesPositionX[0], 2) + Math.Pow(placesPositionY[amount] - placesPositionY[0], 2));
                 amount++;
@@ -57,6 +57,125 @@ namespace ShortestPath
                     placesPositionY[0],
                     placesPositionX[minIndex],
                     placesPositionY[minIndex]);
+
+            //amount = 0;
+            //// LINES
+            //while(amount < placesPositionX.Length - 1)
+            //{
+
+            //    graphics.DrawLine(penWhite,
+            //        placesPositionX[amount],
+            //        placesPositionY[amount],
+            //        placesPositionX[amount + 1],
+            //        placesPositionY[amount + 1]);
+
+            //    amount++;
+            //}
+
+            amount = 0;
+            // DOTS
+            while (amount <= placesPositionX.Length - 1)
+            {
+                if (amount == 0)
+                {
+                    graphics.DrawEllipse(penGreen, placesPositionX[amount], placesPositionY[amount], 1, 1);
+                }
+                else
+                {
+                    graphics.DrawEllipse(penLightGray, placesPositionX[amount], placesPositionY[amount], 1, 1);
+
+                }
+                amount++;
+            }
+
+            amount = 0;
+            // CIRCLES
+            while (amount <= placesPositionX.Length - 1)
+            {
+                if (amount == 0)
+                {
+                    // Start Circle (Green)
+                    graphics.DrawEllipse(penGreen, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                }
+                else
+                {
+                    if (amount == 9)
+                    {
+                        // End Circle (Red-ish)
+                        graphics.DrawEllipse(penRed, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                    }
+                    else
+                    {
+                        if (amount != minIndex)
+                        {
+                            graphics.DrawEllipse(penLightGray, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                        }
+                        else
+                        {
+                            graphics.DrawEllipse(penMinIndex, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                        }
+                    }
+                }
+                amount++;
+            }
+
+            graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
+        }
+
+        void DrawNewFrameWorking()
+        {
+            graphics.Clear(backgroundColor);
+
+            
+            double[] distance = new double[10];
+            distance[0] = 10000;
+            int amount = 1;
+
+            while(amount <= placesPositionX.Length - 1)
+            {
+                distance[amount] = Math.Sqrt(Math.Pow(placesPositionX[amount] - placesPositionX[0], 2) + Math.Pow(placesPositionY[amount] - placesPositionY[0], 2));
+                amount++;
+            }
+
+            List<double> distanceList = distance.OfType<double>().ToList();
+            int[] minIndex = new int[3]; 
+            amount = 0;
+            while(amount < 3)
+            {
+                double smallestPath = distance.Min();
+                minIndex[amount] = distanceList.IndexOf(smallestPath);
+                distance[minIndex[amount]] = 10000;
+                //distanceList.RemoveAt(minIndex[amount]);
+                amount++;
+            }
+
+            // LINE
+            //amount = 0;
+            //while(amount < 3)
+            //{
+            //    graphics.DrawLine(penWhite,
+            //        placesPositionX[0],
+            //        placesPositionY[0],
+            //        placesPositionX[minIndex[amount]],
+            //        placesPositionY[minIndex[amount]]);
+            //    amount++;
+            //}
+
+            amount = 0;
+            while (amount < 10)
+            {
+                int amount2 = 0;
+                while(amount2 < 10)
+                {
+                    graphics.DrawLine(penWhite,
+                    placesPositionX[amount],
+                    placesPositionY[amount],
+                    placesPositionX[amount2],
+                    placesPositionY[amount2]);
+                    amount2++;
+                }
+                amount++;
+            }
 
             //amount = 0;
             //// LINES
@@ -106,14 +225,7 @@ namespace ShortestPath
                     }
                     else
                     {
-                        if (amount != minIndex)
-                        {
-                            graphics.DrawEllipse(penLightGray, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
-                        }
-                        else
-                        {
-                            graphics.DrawEllipse(penMinIndex, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
-                        }
+                        graphics.DrawEllipse(penLightGray, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
                     }
                 }
                 amount++;
@@ -144,8 +256,6 @@ namespace ShortestPath
                 placesPositionY[amount] = RandomNumber();
                 amount++;
             }
-
-
         }
 
         int RandomNumber()
