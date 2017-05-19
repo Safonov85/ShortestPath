@@ -22,11 +22,13 @@ namespace ShortestPath
         Pen penRed = new Pen(Color.PaleVioletRed, 2.0F);
         Pen penMinIndex = new Pen(Color.Blue, 2.0F);
         Pen penWhite = new Pen(Color.White, 2.0F);
+        Font fontText = new Font("Impact", 12.0F);
         Random ran = new Random();
         int[] placesPositionX;
         int[] placesPositionY;
         int currentMoveCircle;
         bool mouseDown = false;
+        bool allowMoveCircle = false;
 
 
         public Main()
@@ -34,7 +36,7 @@ namespace ShortestPath
             InitializeComponent();
         }
 
-        void DrawNewFrame()
+        void DrawNewFrame2()
         {
             graphics.Clear(backgroundColor);
 
@@ -122,7 +124,7 @@ namespace ShortestPath
             graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
         }
 
-        void DrawNewFrameWorking()
+        void DrawNewFrame()
         {
             graphics.Clear(backgroundColor);
 
@@ -148,6 +150,8 @@ namespace ShortestPath
                 //distanceList.RemoveAt(minIndex[amount]);
                 amount++;
             }
+
+            //graphics.DrawString("BABA", fontText, Brushes.GreenYellow, 200, 200);
 
             // LINE
             //amount = 0;
@@ -231,6 +235,13 @@ namespace ShortestPath
                 amount++;
             }
 
+            amount = 0;
+            while(amount < 10)
+            {
+                graphics.DrawString(amount.ToString(), fontText, Brushes.GreenYellow, placesPositionX[amount] + 15, placesPositionY[amount]);
+                amount++;
+            }
+
             graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
         }
 
@@ -272,23 +283,25 @@ namespace ShortestPath
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            int amount = 0;
-            while(amount < 10)
+            if(allowMoveCircle == true)
             {
-                if (e.X > placesPositionX[amount] - 10 && e.X < placesPositionX[amount] + 10 && e.Y > placesPositionY[amount] - 10 && e.Y < placesPositionY[amount] + 10)
+                int amount = 0;
+                while (amount < 10)
                 {
-                    this.Text = "True " + amount;
-                    currentMoveCircle = amount;
-                    mouseDown = true;
-                    break;
+                    if (e.X > placesPositionX[amount] - 10 && e.X < placesPositionX[amount] + 10 && e.Y > placesPositionY[amount] - 10 && e.Y < placesPositionY[amount] + 10)
+                    {
+                        this.Text = "True " + amount;
+                        currentMoveCircle = amount;
+                        mouseDown = true;
+                        break;
+                    }
+                    else
+                    {
+                        this.Text = "Not true";
+                    }
+                    amount++;
                 }
-                else
-                {
-                    this.Text = "Not true";
-                }
-                amount++;
             }
-            
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -308,6 +321,39 @@ namespace ShortestPath
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if(keyData == Keys.Down)
+            {
+                allowMoveCircle = true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (e.KeyCode == Keys.Control)
+            //{
+            //    allowMoveCircle = true;
+            //}
+        }
+
+        private void Main_KeyUp(object sender, KeyEventArgs e)
+        {
+            //if (e.Control)
+            //{
+            //    allowMoveCircle = false;
+            //}
+        }
+
+        private void pictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Control)
+            {
+                allowMoveCircle = true;
+            }
         }
     }
 }
