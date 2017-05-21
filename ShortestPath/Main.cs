@@ -325,35 +325,35 @@ namespace ShortestPath
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if(keyData == Keys.Down)
+            if(keyData == Keys.E)
             {
                 allowMoveCircle = true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
+        
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Control)
-            //{
-            //    allowMoveCircle = true;
-            //}
+            if(e.Modifiers == Keys.E)
+            {
+                allowMoveCircle = true;
+            }
         }
 
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
-            //if (e.Control)
-            //{
-            //    allowMoveCircle = false;
-            //}
+            if(e.Modifiers == Keys.E)
+            {
+                allowMoveCircle = false;
+            }
         }
 
         private void pictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Control)
-            {
-                allowMoveCircle = true;
-            }
+        }
+
+        private void Main_KeyPress(object sender, KeyPressEventArgs e)
+        {
         }
     }
 }

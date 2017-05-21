@@ -77,7 +77,9 @@
             this.Name = "Main";
             this.Text = "ShortestPath";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Main_KeyUp);
+            this.KeyPreview = true;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
