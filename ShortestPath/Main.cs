@@ -34,6 +34,7 @@ namespace ShortestPath
         public Main()
         {
             InitializeComponent();
+            label1.Hide();
         }
 
         void DrawNewFrame2()
@@ -322,29 +323,22 @@ namespace ShortestPath
         {
             mouseDown = false;
         }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if(keyData == Keys.E)
-            {
-                allowMoveCircle = true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
         
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Modifiers == Keys.E)
+            if(e.KeyCode == Keys.ControlKey)
             {
                 allowMoveCircle = true;
+                label1.Show();
             }
         }
 
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.Modifiers == Keys.E)
+            if(e.KeyCode == Keys.ControlKey)
             {
                 allowMoveCircle = false;
+                label1.Hide();
             }
         }
 

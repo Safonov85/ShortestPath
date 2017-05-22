@@ -31,6 +31,7 @@
             this.LoadButton = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.GreenCircleLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,20 +67,30 @@
             this.GreenCircleLabel.TabIndex = 3;
             this.GreenCircleLabel.Text = "Move around Green circle";
             // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.DarkOrange;
+            this.label1.Location = new System.Drawing.Point(24, 107);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 78);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "label1";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 510);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.GreenCircleLabel);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.LoadButton);
+            this.KeyPreview = true;
             this.Name = "Main";
             this.Text = "ShortestPath";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Main_KeyUp);
-            this.KeyPreview = true;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -90,6 +101,7 @@
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label GreenCircleLabel;
+        private System.Windows.Forms.Label label1;
     }
 }
 
