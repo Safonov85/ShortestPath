@@ -22,6 +22,7 @@ namespace ShortestPath
         Pen penRed = new Pen(Color.PaleVioletRed, 2.0F);
         Pen penMinIndex = new Pen(Color.Blue, 2.0F);
         Pen penWhite = new Pen(Color.White, 2.0F);
+        Pen penYellow = new Pen(Color.Yellow, 2.0F);
         Font fontText = new Font("Impact", 12.0F);
         Random ran = new Random();
         int[] placesPositionX;
@@ -125,25 +126,25 @@ namespace ShortestPath
             graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
         }
 
-        void DrawNewFrame()
+        void DrawNewFrame3()
         {
             graphics.Clear(backgroundColor);
 
-            
+
             double[] distance = new double[10];
             distance[0] = 10000;
             int amount = 1;
 
-            while(amount <= placesPositionX.Length - 1)
+            while (amount <= placesPositionX.Length - 1)
             {
                 distance[amount] = Math.Sqrt(Math.Pow(placesPositionX[amount] - placesPositionX[0], 2) + Math.Pow(placesPositionY[amount] - placesPositionY[0], 2));
                 amount++;
             }
 
             List<double> distanceList = distance.OfType<double>().ToList();
-            int[] minIndex = new int[3]; 
+            int[] minIndex = new int[3];
             amount = 0;
-            while(amount < 3)
+            while (amount < 3)
             {
                 double smallestPath = distance.Min();
                 minIndex[amount] = distanceList.IndexOf(smallestPath);
@@ -166,21 +167,21 @@ namespace ShortestPath
             //    amount++;
             //}
 
-            amount = 0;
-            while (amount < 10)
-            {
-                int amount2 = 0;
-                while(amount2 < 10)
-                {
-                    graphics.DrawLine(penWhite,
-                    placesPositionX[amount],
-                    placesPositionY[amount],
-                    placesPositionX[amount2],
-                    placesPositionY[amount2]);
-                    amount2++;
-                }
-                amount++;
-            }
+            //amount = 0;
+            //while (amount < 10)
+            //{
+            //    int amount2 = 0;
+            //    while(amount2 < 10)
+            //    {
+            //        graphics.DrawLine(penWhite,
+            //        placesPositionX[amount],
+            //        placesPositionY[amount],
+            //        placesPositionX[amount2],
+            //        placesPositionY[amount2]);
+            //        amount2++;
+            //    }
+            //    amount++;
+            //}
 
             //amount = 0;
             //// LINES
@@ -195,6 +196,110 @@ namespace ShortestPath
 
             //    amount++;
             //}
+
+            amount = 0;
+            // DOTS
+            while (amount <= placesPositionX.Length - 1)
+            {
+                if (amount == 0)
+                {
+                    graphics.DrawEllipse(penGreen, placesPositionX[amount], placesPositionY[amount], 1, 1);
+                }
+                else
+                {
+                    graphics.DrawEllipse(penLightGray, placesPositionX[amount], placesPositionY[amount], 1, 1);
+
+                }
+                amount++;
+            }
+
+            amount = 0;
+            // CIRCLES
+            while (amount <= placesPositionX.Length - 1)
+            {
+                if (amount == 0)
+                {
+                    // Start Circle (Green)
+                    graphics.DrawEllipse(penGreen, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                }
+                else
+                {
+                    if (amount == 9)
+                    {
+                        // End Circle (Red-ish)
+                        graphics.DrawEllipse(penRed, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                    }
+                    else
+                    {
+                        graphics.DrawEllipse(penLightGray, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                    }
+                }
+                amount++;
+            }
+
+            amount = 0;
+            while (amount < 10)
+            {
+                graphics.DrawString((1 + amount).ToString(), fontText, Brushes.GreenYellow, placesPositionX[amount] + 15, placesPositionY[amount]);
+                amount++;
+            }
+
+            graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
+        }
+
+        void DrawNewFrame()
+        {
+            graphics.Clear(backgroundColor);
+
+            
+            double[] distance = new double[10];
+            distance[0] = 10000;
+            int amount = 1;
+
+            while(amount <= placesPositionX.Length - 1)
+            {
+                distance[amount] = Math.Sqrt(Math.Pow(placesPositionX[amount] - placesPositionX[0], 2) + Math.Pow(placesPositionY[amount] - placesPositionY[0], 2));
+                amount++;
+            }
+
+            List<int> closestToLeftSideLine = new List<int>();
+            List<int> closestToLeftSideLineSorted = new List<int>();
+            Dictionary<int, double> closestToLeftDict = new Dictionary<int, double>();
+            
+            double firstScreenHalfX = bitmap.Width / 2;
+            double lowestPositionX = placesPositionX.Min();
+            //double lowestPositionY = placesPositionY.Min();
+
+            amount = 0;
+            foreach (int positionX in placesPositionX)
+            {
+                if (positionX < firstScreenHalfX)
+                {
+                    closestToLeftSideLine.Add(amount);
+                    closestToLeftDict.Add(amount, placesPositionY[amount]);
+                }
+                amount++;
+            }
+
+            // Sorts dict from smallest to highest Y position
+            var items = from pair in closestToLeftDict
+                        orderby pair.Value ascending
+                        select pair;
+
+            // Draw LINES downward on Left side
+            amount = -1;
+            foreach (var item in items)
+            {
+                if (amount != -1)
+                {
+                    graphics.DrawLine(penWhite,
+                    placesPositionX[amount],
+                    placesPositionY[amount],
+                    placesPositionX[item.Key],
+                    placesPositionY[item.Key]);
+                }
+                amount = item.Key;
+            }
 
             amount = 0;
             // DOTS
@@ -230,7 +335,16 @@ namespace ShortestPath
                     }
                     else
                     {
-                        graphics.DrawEllipse(penLightGray, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                        if(closestToLeftSideLine.Contains(amount))
+                        {
+                            // Yellow Circle
+                            graphics.DrawEllipse(penYellow, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                        }
+                        else
+                        {
+                            // Gray Circle
+                            graphics.DrawEllipse(penLightGray, placesPositionX[amount] - 9, placesPositionY[amount] - 9, 20, 20);
+                        }
                     }
                 }
                 amount++;
