@@ -35,7 +35,7 @@ namespace ShortestPath
         public Main()
         {
             InitializeComponent();
-            label1.Hide();
+            ClosestGreenRadioButton.Checked = true;
         }
 
         void DrawNewFrame2()
@@ -393,7 +393,14 @@ namespace ShortestPath
         private void LoadButton_Click(object sender, EventArgs e)
         {
             Instance();
-            DrawNewFrame();
+            if (ClosestGreenRadioButton.Checked)
+            {
+                DrawNewFrame2();
+            }
+            else if (CreatLineLeftSideRadioButton.Checked)
+            {
+                DrawNewFrame();
+            }
         }
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -427,7 +434,14 @@ namespace ShortestPath
                 {
                     placesPositionX[currentMoveCircle] = e.X;
                     placesPositionY[currentMoveCircle] = e.Y;
-                    DrawNewFrame();
+                    if (ClosestGreenRadioButton.Checked)
+                    {
+                        DrawNewFrame2();
+                    }
+                    else if (CreatLineLeftSideRadioButton.Checked)
+                    {
+                        DrawNewFrame();
+                    }
                 }
             }
             
@@ -443,7 +457,6 @@ namespace ShortestPath
             if(e.KeyCode == Keys.ControlKey)
             {
                 allowMoveCircle = true;
-                label1.Show();
             }
         }
 
@@ -452,16 +465,7 @@ namespace ShortestPath
             if(e.KeyCode == Keys.ControlKey)
             {
                 allowMoveCircle = false;
-                label1.Hide();
             }
-        }
-
-        private void pictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-        }
-
-        private void Main_KeyPress(object sender, KeyPressEventArgs e)
-        {
         }
     }
 }
