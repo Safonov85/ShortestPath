@@ -38,6 +38,7 @@ namespace ShortestPath
             ClosestGreenRadioButton.Checked = true;
         }
 
+        // Draws new frame based on where the closest circle to green has a line between them
         void DrawNewFrame2()
         {
             graphics.Clear(backgroundColor);
@@ -247,6 +248,7 @@ namespace ShortestPath
             graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
         }
 
+        // Draws new frame based on where the positions are at for the Line on the left side
         void DrawNewFrame()
         {
             graphics.Clear(backgroundColor);
@@ -401,6 +403,7 @@ namespace ShortestPath
             {
                 DrawNewFrame();
             }
+            LoadButton.Hide();
         }
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -442,6 +445,7 @@ namespace ShortestPath
                     {
                         DrawNewFrame();
                     }
+                    LoadButton.Show();
                 }
             }
             
