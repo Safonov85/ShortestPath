@@ -123,10 +123,10 @@ namespace ShortestPath
                 }
                 amount++;
             }
-
             graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
         }
 
+        // Experimental
         void DrawNewFrame3()
         {
             graphics.Clear(backgroundColor);
@@ -362,6 +362,7 @@ namespace ShortestPath
             graphicsOverride.DrawImage(bitmap, 0, 0, pictureBox.Width, pictureBox.Height);
         }
 
+        // Creates the objects when new choice is loaded(Load Button)
         void Instance()
         {
             bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
@@ -403,7 +404,6 @@ namespace ShortestPath
             {
                 DrawNewFrame();
             }
-            LoadButton.Hide();
         }
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -445,7 +445,6 @@ namespace ShortestPath
                     {
                         DrawNewFrame();
                     }
-                    LoadButton.Show();
                 }
             }
             
